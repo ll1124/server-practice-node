@@ -34,5 +34,5 @@ var toRandom = require('./routes/toRandom');
 testServer.get('/toRandomPage', toRandom.toRandomPage);
 
 http.createServer(testServer).listen(process.env.POST||8282,function(){
-  console.log('Server Running at http://localhost:8282/')
+  console.log('Server Running at http://localhost:8282/');
 });
