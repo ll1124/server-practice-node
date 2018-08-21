@@ -17,6 +17,7 @@ var db = mongoose.connection;
 db.on('error', console.error);
 db.once('open',function(){
   console.log("Connected to mongod server");
+  console.log(uri);
 });
 mongoose.connect(uri,{ useNewUrlParser: true }).catch(e=> {
   console.error(e.message);
