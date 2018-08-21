@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>2차 문제 추가</title>
+    <link rel="stylesheet" href="/TSRcss">
+    <meta name="author" content="Jin">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <div class="header">
+      <p class="title"><a href="/" id="w">Job Add</a></p>
+    </div>
+    <div class="jobadd">
+      <table id="jobinput">
+        <tr id="one">
+          <td class="subtitle" colspan="4">2차 문제 추가 입력</td>
+        </tr>
+        <tr id="two">
+          <td class="left">문제</td>
+          <td colspan="3"><p class="question"><%=data.question%></p></td>
+        </tr>
+        <tr id="one">
+          <td class="left">과목</td>
+          <td colspan="3"><p><%=data.subject%></p></td>
+        </tr>
+        <tr id="one">
+          <td class="left">출제빈도</td>
+          <td colspan="3" class="frequency"><p id="w"><%=data.frequency%></p></td>
+        </tr>
+        <tr id="one">
+          <td colspan="4"><input type="button" id="check" value="답안 확인"></td>
+        </tr>
+        <tr id="four">
+          <td class="left">모범 답안</td>
+          <td colspan="3"><p class="answer"><%=data.answer %></p></td>
+        </tr>
+        <tr id="one">
+          <td><a href="/toAddPage"><input type="button" id="add" value="문제 추가"></a></td>
+          <td colspan="2"><a href="/toRandomPage"><input type="button" id="save" class="save" value="문제 랜덤 출제"></a></td>
+          <td><input type="button" id="modify" value="문제 편집"></td>
+        </tr>
+      </table>
+    </div>
+    <script>
+    $(document).ready(function(){
+      var top = '상';
+      var middle = '중';
+      var bottom = '하';
+      var color = '<%= data.frequency %>';
+      if (color == top) {
+        $('.frequency').css('background','red');
+      } else if (color == middle) {
+        $('.frequency').css('background','orange');
+      } else if (color == bottom) {
+        $('.frequency').css('background','blue');
+      }
+      $('#check').bind('mousedown touch',function(){
+        $('.answer').show();
+      });
+    });
+    </script>
+  </body>
+</html>

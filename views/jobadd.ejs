@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>2차 문제 추가</title>
+    <link rel="stylesheet" href="/TSAcss">
+    <meta name="author" content="Jin">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <div class="header">
+      <p class="title"><a href="/" id="w">Job Add</a></p>
+    </div>
+    <div class="jobadd">
+      <table id="jobinput">
+        <tr id="one">
+          <td class="subtitle" colspan="4">2차 문제 추가 입력</td>
+        </tr>
+        <tr id="two">
+          <td class="left">문제</td>
+          <td colspan="3"><textarea class="question"></textarea></td>
+        </tr>
+        <tr id="one">
+          <td class="left">과목</td>
+          <td colspan="3"><select class="subject">
+          <option value="재무관리">재무관리</option>
+          <option value="원가회계">원가회계</option>
+          <option value="재무회계">재무회계</option>
+          <option value="세법">세법</option>
+          <option value="회계감사">회계감사</option>
+          </select></td>
+        </tr>
+        <tr id="one">
+          <td class="left">출제빈도</td>
+          <td id="red"><input type="radio" name="frequency" value="상">상</td>
+          <td id="orange"><input type="radio" name="frequency" value="중">중</td>
+          <td id="blue"><input type="radio" name="frequency" value="하">하</td>
+        </tr>
+        <tr id="four">
+          <td class="left">모범 답안</td>
+          <td colspan="3"><textarea class="answer"></textarea></td>
+        </tr>
+        <tr id="one">
+          <td colspan="4"> <input type="button" id="save" class="save" value="문제 추가 저장"></td>
+        </tr>
+      </table>
+    </div>
+    <div id="fadeSuccess">
+      <div id="alertS">
+        <div id="success"><p>문제 추가 완료!</p></div>
+        <a href="/toAddPage"><div id="ok"><p>OK!</p></div></a>
+      </div>
+    </div>
+    <div id="fadeFailure">
+      <div id="alertF">
+        <div id="failure"><p>입력 되지 않은 값이 존재합니다.</p></div>
+        <div id="no"><p>NO!</p></div>
+      </div>
+    </div>
+    <script>
+    $(document).ready(function(){
+      $('.save').bind('mousedown touch',function(){ //모바일과 컴퓨터를 모두 고려하여 mousedown과 touch를 bind함.
+        var question = $('.question').val(); // class가 question인 것의 value 값을 question에 대입.
+        var subject = $('.subject').val();
+        var frequency = $('[name="frequency"]:checked').val(); // name이 frequency인 항목을 체크하고 그 것의 value를 frequency에 대입
+        var answer = $('.answer').val();
+        $.ajax({
+          url:'/abbdata', // 경로는 /abbdata
+          type:'POST', //데이터를 보내는 것이므로 POST
+          data:{question:question, subject:subject, frequency:frequency, answer:answer}, //data는 question을 question으로 subject을 subject으로 frequency를 frequency로 answer를 answer로 사용
+          success:function(result){
+            if (result['result']==true) { // 모든 데이터가 입력되면 alert를 출력, toAdd.js 파일의 13~17의 코드와 연관.
+              $('#fadeSuccess').show();
+              $('#alertS').fadeIn();
+            } else if (result['result']==false) { // 입력되지 않은 데이터가 있을경우 alert를 출력, toAdd.js 파일의 13~17의 코드와 연관.
+              $('#fadeFailure').show();
+              $('#alertF').fadeIn();
+              $('#no').bind('mousedown touch', function(){
+                $('#alertF').fadeOut();
+                $('#fadeFailure').hide();
+              });
+            }
+          }
+        });
+      });
+    });
+    </script>
+  </body>
+</html>
